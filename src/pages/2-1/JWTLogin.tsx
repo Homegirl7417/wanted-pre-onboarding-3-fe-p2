@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getCurrentUserInfoWithToken, loginWithToken } from '../../api/login';
+import { login } from '../../api/login';
 import { UserInfo } from '../../types/user';
 
 const JWTLogin = () => {
@@ -15,11 +15,8 @@ const JWTLogin = () => {
       password: formData.get('password') as string,
     };
 
-    const loginResponse = await loginWithToken(loginPayload);
-    if (loginResponse.result == 'fail') return null;
-    const currentUserInfo = await getCurrentUserInfoWithToken(loginResponse.access_token);
-    if (!currentUserInfo) return null;
-    setUserInfo(currentUserInfo);
+    const loginResponse = await login(loginPayload);
+    if (loginResponse === 'fail') return null;
   };
 
   return (
